@@ -1,0 +1,51 @@
+{
+	"name": "metroidvania",
+	"version": "0.0.1",
+	"description": "metroidvania",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "cross-env NODE_ENV=development webpack-dev-server --open",
+		"build": "cross-env NODE_ENV=production webpack --mode production"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/JaredNil/metroidvania.git"
+	},
+	"keywords": [
+		"js",
+		"javasctipt",
+		"html",
+		"scss"
+	],
+	"author": "JaredN",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/JaredNil/metroidvania/issues"
+	},
+	"homepage": "https://github.com/JaredNil/metroidvania#readme",
+	"private": true,
+	"devDependencies": {
+		"@babel/core": "^7.17.5",
+		"@babel/preset-env": "^7.16.11",
+		"babel-loader": "^8.2.3",
+		"clean-webpack-plugin": "^4.0.0",
+		"copy-webpack-plugin": "^10.2.4",
+		"cross-env": "^7.0.3",
+		"css-loader": "^6.7.1",
+		"html-loader": "^3.1.0",
+		"html-webpack-hot-plugin": "^1.2.2",
+		"html-webpack-plugin": "^5.5.0",
+		"mini-css-extract-plugin": "^2.6.0",
+		"sass": "^1.49.9",
+		"sass-loader": "^12.6.0",
+		"style-loader": "^3.3.1",
+		"webpack": "^5.70.0",
+		"webpack-cli": "^4.9.2",
+		"webpack-dev-server": "^4.7.4"
+	},
+	"dependencies": {
+		"@babel/polyfill": "^7.12.1",
+		"normalize.css": "^8.0.1"
+	}
+}
