@@ -1,2 +1,47 @@
+@import "_variables";
+
 .excel__header {
+	height: $header-height;
+	width: 100%;
+
+	padding: 0 4px;
+
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	.title {
+		color: #000;
+		font-size: 22px;
+		font-weight: 600;
+
+		user-select: none;
+		pointer-events: none;
+	}
+
+	.buttons {
+		margin: 0 60px 0 0;
+		height: 100%;
+
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		.button {
+			background-color: $theme-color-second;
+			margin: 0 20px;
+			padding: 7px 12px;
+			border-radius: 6px;
+
+			span {
+				font-size: 20px;
+				color: #fff;
+			}
+
+			transform: translate(0px);
+			transition: all 0.2s ease 0s;
+			&:hover {
+				transform: translate(0px, 4px);
+			}
+		}
+	}
 }

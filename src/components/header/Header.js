@@ -1,12 +1,14 @@
 import { ExcelComponent } from "../../core/ExcelComponent";
 import { $ } from "../../core/dom";
-import { defaultTitle } from './../../redux/types';
+
 import * as actions from '@/redux/actions'
+
 import { ActiveRoute } from './../../core/router/Router';
 
 
 
 export class Header extends ExcelComponent {
+
 	constructor($root, options) {
 		super($root, {
 			name: 'Header',
@@ -16,16 +18,18 @@ export class Header extends ExcelComponent {
 	}
 	static className = 'excel__header';
 	toHTML() {
-		const title = this.store.getState().title || defaultTitle
 		return `
-		<input type="text" class="input" value="${title}" />
+		<div class="title" >
+			АСУ средств измерений <span>"Метролог"</span>
+		</div>
 		<div class="buttons">
-			<div class="button" data-type="delete">
-				<span class="material-icons" data-type="delete"> delete </span>
-			</div>
-			<div class="button" data-type="exit">
-				<span class="material-icons" data-type="exit"> exit_to_app </span>
-			</div>
+			
+			<a href="/" class="button">
+				<span> НЕКОТОРАЯ ССЫЛКА </span>
+			</a>
+			<a href="/" class="button">
+				<span> НЕКОТОРАЯ ССЫЛКА </span>
+			</a>
 		
 		</div>
 		`
@@ -36,6 +40,7 @@ export class Header extends ExcelComponent {
 		this.$dispatch(actions.changeTitle($target.text()))
 	}
 
+	// Под удаление
 	onClick(event) {
 		const $target = $(event.target)
 

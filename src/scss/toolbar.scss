@@ -1,29 +1,12 @@
 .excel__toolbar {
-	position: absolute;
-
+	width: 100%;
 	height: $toolbar-height;
-	left: 0;
-	right: 0;
 	top: 34px;
 	border-top: 1px solid $border-color;
 	border-bottom: 1px solid $border-color;
 	padding: 7px 10px;
 	display: flex;
-	// .button{
-	// 	&:active, 	&.active {
-	// 		color:green;
-	// 	}
-	// 	span.active{
-	// 		color:green;
-	// 	}
-	// 	&:hover {
-	// 		background-color: #eee;
-	// 		cursor: pointer;
-	// 	}
-	// }
 
 	.button {
-		@include button(green);
 	}
-
 }

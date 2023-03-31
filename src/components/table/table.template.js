@@ -2,17 +2,17 @@ import { toInlineStyles } from "../../core/utils"
 import { defaultStyles } from './../../redux/types';
 import { parse } from './../../core/parse';
 
+
 const DEFAULT_WIDTH = 120
 const DEFAULT_HEIGHT = 24
-const CODES = {
-	A: 65,
-	Z: 90
-}
+
 
 function withWidthFrom(state) {
 	return function (col, index) {
 		return {
-			col, index, width: getWidth(state.colState, index)
+			col, index,
+			width: getWidth(state.colState, index),
+			height: getHeight(state.rowState, index)
 		}
 	}
 }
@@ -25,6 +25,7 @@ function getHeight(rowState = {}, index) {
 }
 
 function toColumn({ col, index, width }) {
+
 	return `
 	<div 
 		class="column" 
@@ -41,21 +42,47 @@ function toColumn({ col, index, width }) {
 	</div>`
 }
 
-
+function toSearchColumn({ _, index, width }) {
+	return `
+	<input 
+			class="search column"
+			data-col="${index}" 
+			style="width:${width}"
+	/>
+	`
+}
 
 
 function toRow(index, content, rowState) {
-	const resize = index ?
-		`<div class="row-resize" data-resize="row"></div>`
+
+	let a = getHeight(rowState, index)
+
+	const resize = (index)
+		? `<div class="row-resize" data-resize="row"></div>`
 		: ``
+
+	return `
+		<div  
+			class="row" data-type="resizable"
+			data-row="${(index) ? index : '0'}"
+			style="height:${getHeight(rowState, index)}">
+			<div class="row-info">
+				<span class="row-index">${index}</span>
+				${resize}
+			</div>
+			<div class="row-data">${content}</div>
+		</div>`
+}
+
+function toRowSearch(index, content, rowState) {
+
 	return `
 		<div  
 			class="row" data-type="resizable"
 			data-row="${index}"
 			style="height:${getHeight(rowState, index)}">
-			<div class="row-info">
-				${index}
-				${resize}
+			<div class="row-info search-info">
+				<span class="row-index"></span>
 			</div>
 			<div class="row-data">${content}</div>
 		</div>`
@@ -73,7 +100,6 @@ function toCell(state, row) {
 		return `
 		<div 
 			class="cell" 
-			contenteditable="" 
 			data-type="cell"
 			data-value="${data || ''}"
 			data-col="${col}" 
@@ -90,27 +116,57 @@ function toCell(state, row) {
 
 
 export function createTable(rowsCount = 15, state = {}) {
+	console.log(state);
 
-	const colsCount = CODES.Z - CODES.A + 1;
+	const colsNaming = [
+		'№ п/п в годовом графике',
+		'Годовой график СИ',
+		'Поздразделение эксплуатант',
+		'Индивидуальный номер СИ',
+		'checked',
+		'Шифр состояния СИ',
+		'Наимнование',
+		'Тип/модель СИ',
+		'Диапазон измерений',
+		'Ответственный за эксплуатацию СИ или участок',
+		'Функциональная ответственность',
+		'Дата установления',
+		'Дата следующей поверки',
+		'Переодичность поверки',
+
+	]
 	const rows = []
 
-	const cols = new Array(colsCount)
+	// Create first row with naming of column
+	const colsTitle = new Array(colsNaming.length)
 		.fill('')
-		.map((_, index) => { return String.fromCharCode(CODES.A + index) })
+		.map((_, index) => colsNaming[index])
 		.map(withWidthFrom(state))
 		.map(toColumn)
 		.join(``)
-	rows.push(toRow('', cols)) // Create first row with A-Z
+	rows.push(toRow('', colsTitle, state.rowState))
+
+	// Create secord row with search
+	const colsSearch = new Array(colsNaming.length)
+		.fill('')
+		.map((_, index) => colsNaming[index])
+		.map(withWidthFrom(state))
+		.map(toSearchColumn)
+		.join(``)
+
+	rows.push(toRowSearch('search', colsSearch, state.rowState))
 
 
 	for (let row = 0; row < rowsCount; row++) {
-		const cells = new Array(colsCount)
+		const cells = new Array(colsNaming.length)
 			.fill('')
 			.map(toCell(state, row))
 			.join('')
 
 		rows.push(toRow(row + 1, cells, state.rowState));
 	}
+
+
 
 	return rows.join('')
 }

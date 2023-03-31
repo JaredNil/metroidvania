@@ -1,6 +1,7 @@
 
 import { storage } from './../core/utils';
 export function createRecordsTable() {
+
 	const keys = getAllKeys()
 
 	if (keys.length) {

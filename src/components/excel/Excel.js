@@ -12,6 +12,7 @@ export class Excel {
 	}
 
 	getRoot() {
+		const $rootContainer = $.create('div', 'excel__container')
 		const $root = $.create('div', 'excel')
 
 		const componentOptions = {
@@ -24,10 +25,10 @@ export class Excel {
 			let component = new Component($el, componentOptions)
 			$el.html(component.toHTML())
 
-			$root.append($el);
+			$rootContainer.append($el);
 			return component;
 		});
-		return $root
+		return $root.append($rootContainer)
 	}
 
 	init() {

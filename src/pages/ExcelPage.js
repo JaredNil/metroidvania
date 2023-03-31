@@ -4,12 +4,12 @@ import { createStore } from './../core/createStore';
 import { storage } from './../core/utils';
 import { Excel } from './../components/excel/Excel';
 import { rootReducer } from './../redux/rootReducer';
-import { initialState, normalizeInitialState } from './../redux/initialState';
+import { normalizeInitialState } from './../redux/initialState';
 
-import { Formula } from './../components/formula/Formula';
+// import { Formula } from './../components/formula/Formula';
 import { Header } from './../components/header/Header';
 import { Table } from './../components/table/Table';
-import { Toolbar } from './../components/toolbar/Toolbar';
+// import { Toolbar } from './../components/toolbar/Toolbar';
 
 
 export class ExcelPage extends Page {
@@ -24,7 +24,7 @@ export class ExcelPage extends Page {
 		})
 
 		this.excel = new Excel({
-			components: [Header, Toolbar, Formula, Table],
+			components: [Header, Table],
 			store
 		})
 
