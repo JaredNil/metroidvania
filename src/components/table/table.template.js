@@ -119,7 +119,7 @@ export function createTable(rowsCount = 15, state = {}) {
 	console.log(state);
 
 	const colsNaming = [
-		'№ п/п в годовом графике',
+		'№ п/п в графике',
 		'Годовой график СИ',
 		'Поздразделение эксплуатант',
 		'Индивидуальный номер СИ',

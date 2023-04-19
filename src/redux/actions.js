@@ -1,4 +1,4 @@
-import { CHANGE_TEXT, CHANGE_STYLES, TABLE_RESIZE, APPLY_STYLE, CHANGE_TITLE, UPDATE_DATE } from './types';
+import { CHANGE_TEXT, CHANGE_STYLES, TABLE_RESIZE, APPLY_STYLE, CHANGE_TITLE, UPDATE_DATE, DEFAULT_CLICK_STATE } from './types';
 
 
 
@@ -42,3 +42,10 @@ export function updateDate() {
 		type: UPDATE_DATE
 	}
 }
+
+export function defaultClickState() {
+	return {
+		type: DEFAULT_CLICK_STATE
+	}
+}
+

@@ -43,3 +43,7 @@ const normalize = state => (
 export function normalizeInitialState(state) {
 	return state ? normalize(state) : defaultState
 }
+
+export function clickDefaultState() {
+	return defaultState
+}

@@ -24,11 +24,11 @@ export class Header extends ExcelComponent {
 		</div>
 		<div class="buttons">
 			
-			<a href="/" class="button">
+			<a class="button">
 				<span> НЕКОТОРАЯ ССЫЛКА </span>
 			</a>
-			<a href="/" class="button">
-				<span> НЕКОТОРАЯ ССЫЛКА </span>
+			<a href="/"  class="button _state-clear">
+				<span class="_state-clear"> Очистка стейта на дефолт </span>
 			</a>
 		
 		</div>
@@ -36,23 +36,26 @@ export class Header extends ExcelComponent {
 	}
 
 	onInput(event) {
+		console.log('onInput')
 		const $target = $(event.target)
 		this.$dispatch(actions.changeTitle($target.text()))
 	}
 
-	// Под удаление
 	onClick(event) {
+		event.preventDefault()
 		const $target = $(event.target)
 
-		if ($target.data.type === 'exit') {
-			ActiveRoute.navigate(' ')
+		if ($target.$el.classList.contains('_state-clear')) {
+			console.log('onClick on clear State')
+			this.$dispatch(actions.defaultClickState())
 		}
-
-		else if ($target.data.type === 'delete') {
-			if (confirm('Вы действительно хотите удалить ')) {
-				localStorage.removeItem('excel:' + ActiveRoute.param)
-				ActiveRoute.navigate(' ')
-			}
-		}
+		// if ($target.data.type === 'exit') {
+		// 	ActiveRoute.navigate(' ')
+		// }		else if ($target.data.type === 'delete') {
+		// if (confirm('Вы действительно хотите удалить ')) {
+		// 	localStorage.removeItem('excel:' + ActiveRoute.param)
+		// 	ActiveRoute.navigate(' ')
+		// }
+		// }
 	}
 }

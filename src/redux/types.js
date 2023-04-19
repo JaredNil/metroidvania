@@ -4,7 +4,7 @@ export const APPLY_STYLE = 'APPLY_STYLE'
 export const CHANGE_STYLES = 'CHANGE_STYLES'
 export const CHANGE_TITLE = 'CHANGE_TITLE'
 export const UPDATE_DATE = 'UPDATE_DATE'
-
+export const DEFAULT_CLICK_STATE = 'DEFAULT_CLICK_STATE'
 
 export const defaultStyles = {
 	textAlign: 'left',
