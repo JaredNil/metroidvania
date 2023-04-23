@@ -17,7 +17,11 @@ export class Header extends ExcelComponent {
 		})
 	}
 	static className = 'excel__header';
+	prepare() {
+		console.log('prepare Header Component');
+	}
 	toHTML() {
+		console.log('Header rerender');
 		return `
 		<div class="title" >
 			АСУ средств измерений <span>"Метролог"</span>
@@ -36,7 +40,6 @@ export class Header extends ExcelComponent {
 	}
 
 	onInput(event) {
-		console.log('onInput')
 		const $target = $(event.target)
 		this.$dispatch(actions.changeTitle($target.text()))
 	}

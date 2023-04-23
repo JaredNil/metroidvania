@@ -4,7 +4,7 @@ import { $ } from "../../core/dom";
 
 export class Router {
 	constructor(selector, routes) {
-		if (!selector) throw new Error('Selector dont implemented in router')
+		if (!selector) throw new Error('Selector don\'t implemented in router')
 
 		this.$placeholder = $(selector)
 		this.routes = routes

@@ -38,7 +38,6 @@ export class Excel {
 	}
 
 	destroy() {
-
 		this.subscriber.unsubscribeComponents()
 		this.components.forEach(component => component.destroy())
 	}

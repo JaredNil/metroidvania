@@ -32,7 +32,6 @@ export class Table extends ExcelComponent {
 
 	init() {
 		super.init()
-
 		const $cell_start = this.$root.find('[data-id="0:0"]')
 		this.selection.select($cell_start)
 		this.$emit('Table:input', $cell_start)
@@ -56,6 +55,11 @@ export class Table extends ExcelComponent {
 				ids: this.selection.selectedIds
 			}))
 		})
+
+		this.$on('Header:click', value => {
+			this.$dispatch(actions.defaultClickState)
+		})
+
 	}
 
 	selectCell($cell) {
@@ -122,8 +126,6 @@ export class Table extends ExcelComponent {
 			const id = this.selection.$current.id(true)
 			const $next = this.$root.find(nextSelect(key, id))
 
-
-
 			this.selectCell($next)
 			// this.selection.select($next)
 			// this.$emit('Table:select', $next)
@@ -139,7 +141,7 @@ export class Table extends ExcelComponent {
 
 
 	onInput(event) {
-		// this.$emit('Table:input', $(event.target))
+		this.$emit('Table:input', $(event.target))
 		this.updateTextInStore($(event.target).text())
 	}
 }
