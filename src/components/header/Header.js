@@ -17,11 +17,8 @@ export class Header extends ExcelComponent {
 		})
 	}
 	static className = 'excel__header';
-	prepare() {
-		console.log('prepare Header Component');
-	}
 	toHTML() {
-		console.log('Header rerender');
+		console.log('HeaderComponent rerender toHTML()');
 		return `
 		<div class="title" >
 			АСУ средств измерений <span>"Метролог"</span>
@@ -49,8 +46,7 @@ export class Header extends ExcelComponent {
 		const $target = $(event.target)
 
 		if ($target.$el.classList.contains('_state-clear')) {
-			console.log('onClick on clear State')
-			this.$dispatch(actions.defaultClickState())
+			this.$emit('Table:rerender')
 		}
 		// if ($target.data.type === 'exit') {
 		// 	ActiveRoute.navigate(' ')

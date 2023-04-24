@@ -3,7 +3,6 @@ import { clickDefaultState } from './initialState';
 import { CHANGE_TEXT, CHANGE_STYLES, TABLE_RESIZE, APPLY_STYLE, CHANGE_TITLE, UPDATE_DATE, DEFAULT_CLICK_STATE } from './types';
 
 export function rootReducer(state, action) {
-	console.log(action);
 	let field
 	switch (action.type) {
 
@@ -41,14 +40,6 @@ export function rootReducer(state, action) {
 			return { ...state, openedDate: new Date().toJSON() }
 
 		case DEFAULT_CLICK_STATE:
-			// const newState = clickDefaultState();
-			// newState.colState
-			// debugger
-			// return {
-			// 	...newState,
-			// 	currentText: action.data.value,
-			// 	[field]: value(state, field, action)
-			// }
 			return { ...clickDefaultState() }
 
 		default: return state

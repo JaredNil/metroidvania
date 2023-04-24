@@ -36,7 +36,6 @@ export class Table extends ExcelComponent {
 		this.selection.select($cell_start)
 		this.$emit('Table:input', $cell_start)
 
-
 		this.$on('Formula:input', value => {
 			this.selection.$current
 				.attr('data-value', value)
@@ -48,6 +47,12 @@ export class Table extends ExcelComponent {
 			this.selection.$current.focus()
 		})
 
+		this.$on('Table:rerender', () => {
+			console.log('onClick on clear State')
+			this.$dispatch(actions.defaultClickState())
+			console.log(this);
+
+		})
 		this.$on('Toolbar:applyStyle', value => {
 			this.selection.applyStyle(value)
 			this.$dispatch(actions.applyStyle({
@@ -100,9 +105,6 @@ export class Table extends ExcelComponent {
 				)
 				const $cells = IDs.map(id => this.$root.find(`[data-id="${id}"]`))
 				this.selection.selectGroup($cells)
-
-
-
 			}
 			else
 				this.selectCell($(event.target))
@@ -145,10 +147,6 @@ export class Table extends ExcelComponent {
 		this.updateTextInStore($(event.target).text())
 	}
 }
-
-
-
-
 
 
 function nextSelect(key, { col, row }) {

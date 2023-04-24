@@ -116,7 +116,6 @@ function toCell(state, row) {
 
 
 export function createTable(rowsCount = 15, state = {}) {
-	console.log(state);
 
 	const colsNaming = [
 		'№ п/п в графике',
