@@ -5,6 +5,7 @@ import { rootReducer } from './../redux/rootReducer';
 import { normalizeInitialState } from './../redux/initialState';
 
 import { Header } from './../components/header/Header';
+import { Title } from './../components/title/Title';
 import { Table } from './../components/table/Table';
 
 
@@ -13,7 +14,6 @@ export class Page {
 	constructor(params) {
 		this.params = params
 	}
-
 	getRoot() {
 		try {
 			const state = storage('excel')
@@ -24,7 +24,7 @@ export class Page {
 
 
 			this.excel = new Excel({
-				components: [Header, Table],
+				components: [Header, Title, Table],
 				store
 			})
 

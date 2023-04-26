@@ -1,4 +1,5 @@
-.excel__table {
+.excel__table,
+.table__header {
 	width: 100%;
 	overflow-x: auto;
 	padding-bottom: 2px;
@@ -47,13 +48,13 @@
 	.search {
 		display: block;
 
-		border: 2px solid #ff3cf550;
+		border: 2px solid $bc-color-resize;
 		border-radius: 9px;
 		overflow: hidden;
 
 		transition: all 0.2s ease 0s;
 		&:hover {
-			border: 2px solid #ff3cf5;
+			border: 2px solid $bc-color-resize;
 		}
 	}
 
@@ -70,7 +71,7 @@
 		outline: none;
 		&.selected {
 			border: none;
-			outline: 2px solid #3c74ff;
+			outline: 2px solid $bc-color-resize;
 			z-index: 2;
 		}
 	}
@@ -81,7 +82,7 @@
 		bottom: 0;
 		right: 0;
 		width: 4px;
-		background: #3c74ff;
+		background: $bc-color-resize;
 		opacity: 0;
 		z-index: 1000;
 		&:hover {

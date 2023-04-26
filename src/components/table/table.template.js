@@ -7,7 +7,7 @@ const DEFAULT_WIDTH = 120
 const DEFAULT_HEIGHT = 24
 
 
-function withWidthFrom(state) {
+export function withWidthFrom(state) {
 	return function (col, index) {
 		return {
 			col, index,
@@ -24,7 +24,7 @@ function getHeight(rowState = {}, index) {
 	return (rowState[index] || DEFAULT_HEIGHT) + 'px'
 }
 
-function toColumn({ col, index, width }) {
+export function toColumn({ col, index, width }) {
 
 	return `
 	<div 
@@ -33,7 +33,7 @@ function toColumn({ col, index, width }) {
 		data-col="${index}" 
 		style="width:${width}"
 	>
-		${col}
+		<span>${col}</span>
 		<div 
 			class="col-resize" 
 			data-resize="col"
@@ -42,7 +42,7 @@ function toColumn({ col, index, width }) {
 	</div>`
 }
 
-function toSearchColumn({ _, index, width }) {
+export function toSearchColumn({ _, index, width }) {
 	return `
 	<input 
 			class="search column"
@@ -53,7 +53,7 @@ function toSearchColumn({ _, index, width }) {
 }
 
 
-function toRow(index, content, rowState) {
+export function toRow(index, content, rowState) {
 
 	let a = getHeight(rowState, index)
 
@@ -74,7 +74,7 @@ function toRow(index, content, rowState) {
 		</div>`
 }
 
-function toRowSearch(index, content, rowState) {
+export function toRowSearch(index, content, rowState) {
 
 	return `
 		<div  
@@ -117,6 +117,7 @@ function toCell(state, row) {
 
 export function createTable(rowsCount = 15, state = {}) {
 
+	const rows = []
 	const colsNaming = [
 		'№ п/п в графике',
 		'Годовой график СИ',
@@ -132,9 +133,7 @@ export function createTable(rowsCount = 15, state = {}) {
 		'Дата установления',
 		'Дата следующей поверки',
 		'Переодичность поверки',
-
 	]
-	const rows = []
 
 	// Create first row with naming of column
 	const colsTitle = new Array(colsNaming.length)

@@ -34,12 +34,11 @@ export class ExcelComponent extends DomListener {
 		this.store.dispatch(action)
 	}
 
-	storeChanges() { }
+	storeChanged() { }
 
 	isWatching(key) {
 		return this.subscribe.includes(key)
 	}
-
 
 	init() {  /// Execute initialization 
 		this.initDOMListeners(); // Add DOM Listener

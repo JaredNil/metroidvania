@@ -9,6 +9,8 @@ import { ActiveRoute } from './../../core/router/Router';
 
 export class Header extends ExcelComponent {
 
+	static className = ['excel__header', 'container'];
+
 	constructor($root, options) {
 		super($root, {
 			name: 'Header',
@@ -16,23 +18,36 @@ export class Header extends ExcelComponent {
 			...options
 		})
 	}
-	static className = 'excel__header';
 	toHTML() {
-		console.log('HeaderComponent rerender toHTML()');
 		return `
-		<div class="title" >
-			АСУ средств измерений <span>"Метролог"</span>
-		</div>
-		<div class="buttons">
-			
-			<a class="button">
-				<span> НЕКОТОРАЯ ССЫЛКА </span>
-			</a>
-			<a href="/"  class="button _state-clear">
-				<span class="_state-clear"> Очистка стейта на дефолт </span>
-			</a>
-		
-		</div>
+			<div class="general">
+				<div class="title" >
+					МЕТРОЛОГ
+				</div>
+				<div class="subtitle">
+					АСУ средств измерений 
+				</div>
+			</div>
+			<div class="button__wrapper">
+
+				<div class="button__column">
+					<a class="button__item">
+						<span> Проверка </span>
+					</a>
+					<a href="/"  class="button__item _state-clear">
+						<span class="_state-clear"> Сброс стилей </span>
+					</a>
+				</div>
+				<div class="button__column">
+					<a class="button__item">
+						<span> Функционал </span>
+					</a>
+					<a class="button__item">
+						<span> Сортировать </span>
+					</a>
+				</div>
+
+			</div>
 		`
 	}
 

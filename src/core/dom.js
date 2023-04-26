@@ -127,10 +127,13 @@ export function $(selector) {
 	return new Dom(selector)
 }
 
-$.create = (tagName, classes = '') => {
+$.create = (tagName, classes = []) => {
+
 	const el = document.createElement(tagName)
-	if (classes) {
-		el.classList.add(classes)
+	if (classes.length != 0) {
+		classes.forEach(cl => {
+			el.classList.add(cl)
+		})
 	}
 	return $(el)
 }

@@ -12,12 +12,13 @@ import { parse } from './../../core/parse';
 
 
 export class Table extends ExcelComponent {
-	static className = 'excel__table';
+	static className = ['excel__table', 'container'];
 
 	constructor($root, options) {
 		super($root, {
 			name: 'Table',
 			listeners: ['mousedown', 'keydown', 'input'],
+			subscribe: ['colState'],
 			...options
 		})
 	}
@@ -48,11 +49,9 @@ export class Table extends ExcelComponent {
 		})
 
 		this.$on('Table:rerender', () => {
-			console.log('onClick on clear State')
 			this.$dispatch(actions.defaultClickState())
-			console.log(this);
-
 		})
+
 		this.$on('Toolbar:applyStyle', value => {
 			this.selection.applyStyle(value)
 			this.$dispatch(actions.applyStyle({
@@ -67,6 +66,11 @@ export class Table extends ExcelComponent {
 
 	}
 
+	storeChanged(changes) {
+		console.log('Table: storeChanged()', changes)
+		this.toHTML()
+	}
+
 	selectCell($cell) {
 		this.selection.select($cell)
 		this.$emit('Table:select', $cell)
@@ -75,6 +79,7 @@ export class Table extends ExcelComponent {
 		this.$dispatch(actions.changeStyles(styles))
 	}
 
+	// block под удаление
 	async resizeTable(event) {
 		try {
 			const data = await resizeHandler(event, this.$root)
@@ -84,7 +89,6 @@ export class Table extends ExcelComponent {
 			console.log(error);
 		}
 	}
-
 	onMousedown(event) {
 		if (event.target.dataset.resize) {
 			this.resizeTable(event)

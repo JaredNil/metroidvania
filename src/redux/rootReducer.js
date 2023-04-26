@@ -4,10 +4,10 @@ import { CHANGE_TEXT, CHANGE_STYLES, TABLE_RESIZE, APPLY_STYLE, CHANGE_TITLE, UP
 
 export function rootReducer(state, action) {
 	let field
+	console.log('ACTION: ', action.type);
 	switch (action.type) {
 
 		case TABLE_RESIZE:
-			console.log(state);
 			field = action.data.resize === 'col' ? 'colState' : 'rowState'
 			return { ...state, [field]: value(state, field, action) } // Data: id, changeValue
 
