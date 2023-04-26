@@ -3,7 +3,7 @@ import { defaultStyles } from './../../redux/types';
 import { parse } from './../../core/parse';
 
 
-const DEFAULT_WIDTH = 120
+const DEFAULT_WIDTH = 60
 const DEFAULT_HEIGHT = 24
 
 

@@ -6,9 +6,12 @@
 
 	.row {
 		display: flex;
-		flex-direction: row;
+		justify-content: flex-start;
 		min-height: 20px;
 		height: $row-height;
+
+		position: relative;
+		overflow-y: clip;
 	}
 	.row-info {
 		position: relative;
@@ -29,8 +32,11 @@
 			pointer-events: none;
 		}
 	}
+
 	.row-data {
-		display: flex;
+		width: 100%;
+		display: grid;
+		grid-template-columns: $grid-columns;
 	}
 	.column {
 		position: relative;
@@ -39,7 +45,7 @@
 		align-items: center;
 		background: #f8f9fa;
 		min-width: 40px;
-		width: $cell-width;
+		// width: $cell-width;
 		border: 1px solid $border-color;
 		height: 100%;
 		border-top: none;
@@ -88,6 +94,7 @@
 		&:hover {
 			opacity: 1 !important;
 			cursor: col-resize;
+			z-index: 1000;
 		}
 	}
 
@@ -103,6 +110,116 @@
 		&:hover {
 			opacity: 1 !important;
 			cursor: row-resize;
+			z-index: 1000;
 		}
 	}
 }
+
+// .excel__table,
+// .table__header {
+// 	width: 100%;
+// 	overflow-x: auto;
+// 	padding-bottom: 2px;
+
+// 	.row {
+// 		display: flex;
+// 		flex-direction: row;
+// 		min-height: 20px;
+// 		height: $row-height;
+// 	}
+// 	.row-info {
+// 		position: relative;
+// 		display: flex;
+// 		justify-content: center;
+// 		align-items: center;
+// 		min-width: $info-cell-width;
+// 		height: 100%;
+// 		border: 1px solid $border-color;
+// 		background: #f8f9fa;
+// 		border-top: none;
+
+// 		&.search-info {
+// 			background: no-repeat center/60% url("./../assets/searchIcon.png");
+// 		}
+// 		.row-index {
+// 			user-select: none;
+// 			pointer-events: none;
+// 		}
+// 	}
+// 	.row-data {
+// 		display: flex;
+// 	}
+// 	.column {
+// 		position: relative;
+// 		display: flex;
+// 		justify-content: center;
+// 		align-items: center;
+// 		background: #f8f9fa;
+// 		min-width: 40px;
+// 		width: $cell-width;
+// 		border: 1px solid $border-color;
+// 		height: 100%;
+// 		border-top: none;
+// 		border-left: none;
+// 	}
+// 	.search {
+// 		display: block;
+
+// 		border: 2px solid $bc-color-resize;
+// 		border-radius: 9px;
+// 		overflow: hidden;
+
+// 		transition: all 0.2s ease 0s;
+// 		&:hover {
+// 			border: 2px solid $bc-color-resize;
+// 		}
+// 	}
+
+// 	.cell {
+// 		min-width: 40px;
+// 		padding: 5px;
+// 		width: $cell-width;
+// 		height: 100%;
+// 		border: 1px solid #e2e3e3;
+// 		border-top: none;
+// 		border-left: none;
+// 		color: #111;
+// 		white-space: nowrap;
+// 		outline: none;
+// 		&.selected {
+// 			border: none;
+// 			outline: 2px solid $bc-color-resize;
+// 			z-index: 2;
+// 		}
+// 	}
+
+// 	.col-resize {
+// 		position: absolute;
+// 		top: 0;
+// 		bottom: 0;
+// 		right: 0;
+// 		width: 4px;
+// 		background: $bc-color-resize;
+// 		opacity: 0;
+// 		z-index: 1000;
+// 		&:hover {
+// 			opacity: 1 !important;
+// 			cursor: col-resize;
+// 		}
+// 	}
+
+// 	.row-resize {
+// 		position: absolute;
+// 		left: 0;
+// 		right: 0;
+// 		bottom: 0;
+// 		z-index: 1000;
+// 		height: 4px;
+// 		background: #3c74ff;
+// 		opacity: 0;
+// 		&:hover {
+// 			opacity: 1 !important;
+// 			cursor: row-resize;
+// 		}
+// 	}
+// }
