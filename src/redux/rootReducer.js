@@ -1,6 +1,6 @@
 
 import { clickDefaultState } from './initialState';
-import { CHANGE_TEXT, CHANGE_STYLES, TABLE_RESIZE, APPLY_STYLE, CHANGE_TITLE, UPDATE_DATE, DEFAULT_CLICK_STATE } from './types';
+import { UPDATE_SEARCH_PARAM, CHANGE_TEXT, CHANGE_STYLES, TABLE_RESIZE, APPLY_STYLE, CHANGE_TITLE, UPDATE_DATE, DEFAULT_CLICK_STATE, SET_RESPONSE } from './types';
 
 export function rootReducer(state, action) {
 	let field
@@ -33,23 +33,38 @@ export function rootReducer(state, action) {
 				currentStyles: { ...state.currentStyles, ...action.data.value }
 			}
 
-		case CHANGE_TITLE:
-			return { ...state, title: action.data }
-
 		case UPDATE_DATE:
 			return { ...state, openedDate: new Date().toJSON() }
 
+		case UPDATE_SEARCH_PARAM:
+			return {
+				...state, searchState: {
+					...state.searchState,
+					[action.data.id]: action.data.text
+				}
+			}
+
 		case DEFAULT_CLICK_STATE:
 			return { ...clickDefaultState() }
+
+		case SET_RESPONSE:
+			return { ...state, dataState: action.data.resArr }
+
 
 		default: return state
 	}
 }
 
-function value(state, field, action) {
-
+function value(state, field, { data }) {
+	let newValue = 'ERROR'
+	if (field === 'colState') {
+		newValue = (data.changeValue < 25) ? '25px' : data.changeValue + 'px'
+	}
+	else if (field === 'rowState') {
+		newValue = (data.changeValue < 24) ? '24px' : data.changeValue + 'px'
+	}
 	const val = state[field] || {}
-	val[action.data.id] = action.data.changeValue + 'px'
+	val[data.id] = newValue
 
 	return val
 }

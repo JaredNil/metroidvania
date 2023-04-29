@@ -36,6 +36,12 @@ export function getGridTemplateCol(index, colState) {
 	return gTC
 }
 
+function getSearchParamFromState(id, searchState) {
+	return searchState[id]
+}
+
+
+
 function toColumn({ col, index, width }) {
 
 	// style="width:${width}" ВЫДЕЛИЛИ В STATE для grid
@@ -55,12 +61,16 @@ function toColumn({ col, index, width }) {
 	</div>`
 }
 
-function toSearchColumn({ _, index, width }) {
+// 
+
+function toSearchColumn(index, searchState) {
+
+
 	return `
 	<input 
 			class="search column"
 			data-col="${index}" 
-			style="width:${width}"
+			value="${getSearchParamFromState(index, searchState)}"
 	/>
 	`
 }
@@ -113,23 +123,19 @@ export function toRowSearch(index, content, { rowState, colState }) {
 
 
 function toCell(state, row) {
+
 	return function (_, col) {
 		const id = `${row}:${col}`
-		const data = state.dataState[id]
-		const styles = toInlineStyles({
-			...defaultStyles,
-			...state.stylesState[id]
-		})
+		const valueCell = state
+
 		return `
 		<div 
 			class="cell" 
 			data-type="cell"
-			data-value="${data || ''}"
 			data-col="${col}" 
 			data-id="${row}:${col}"
-			style="${styles};"
 		>
-		${parse(data) || ''}
+			${state.dataState[row][col]}
 		</div>
 		`
 	}
@@ -138,13 +144,20 @@ function toCell(state, row) {
 
 
 
-export function createTable(rowsCount = 15, state = {}) {
+export function createTable(state) {
 
+	const rowsCount = () => state.dataState.length || 15
 	const rows = []
 	const finderCommonHTML = `
 	<div class="table__commonfinder">
 		<div class="table__commonfinder-container">
-			<input contenteditable placeholder="COMMON FINDER..." class="input"/>
+			<input 
+				contenteditable 
+				placeholder="COMMON FINDER..." 
+				class="input"
+				data-col="common"
+				value="${getSearchParamFromState('common', state.searchState)}"
+			/>
 		</div>
 	</div>
 	`
@@ -176,21 +189,22 @@ export function createTable(rowsCount = 15, state = {}) {
 	rows.push(toRow('0', colsTitle, state))
 
 	// Create secord row with search
-	const colsSearch = new Array(colsNaming.length)
+	let colsSearch = new Array(colsNaming.length)
 		.fill('')
 		.map((_, index) => colsNaming[index])
 		.map(withWidthFrom(state))
-		.map(toSearchColumn)
+		.map(({ index }) => toSearchColumn(index, state.searchState))
 		.join(``)
 
 	rows.push(toRowSearch('search', colsSearch, state))
 
 
-	for (let row = 0; row < rowsCount; row++) {
+	for (let row = 0; row < rowsCount(); row++) {
 		const cells = new Array(colsNaming.length)
 			.fill('')
 			.map(toCell(state, row))
 			.join('')
+
 
 		rows.push(toRow(row + 1, cells, state));
 	}

@@ -1,4 +1,4 @@
-export function parse(value = '') {
+export function parse(dataState, id) {
 	if (value.startsWith('=')) {
 		try {
 			return eval(value.slice(1))

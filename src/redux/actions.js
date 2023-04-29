@@ -1,4 +1,4 @@
-import { CHANGE_TEXT, CHANGE_STYLES, TABLE_RESIZE, APPLY_STYLE, CHANGE_TITLE, UPDATE_DATE, DEFAULT_CLICK_STATE } from './types';
+import { CHANGE_TEXT, CHANGE_STYLES, TABLE_RESIZE, APPLY_STYLE, CHANGE_TITLE, UPDATE_DATE, DEFAULT_CLICK_STATE, UPDATE_SEARCH_PARAM, SET_RESPONSE } from './types';
 
 
 
@@ -46,6 +46,21 @@ export function updateDate() {
 export function defaultClickState() {
 	return {
 		type: DEFAULT_CLICK_STATE
+	}
+}
+
+export function updateSearchParam(data) {
+	return {
+		type: UPDATE_SEARCH_PARAM,
+		data
+	}
+}
+
+
+export function setResponse(data) {
+	return {
+		type: SET_RESPONSE,
+		data
 	}
 }
 

@@ -31,10 +31,10 @@ export class Header extends ExcelComponent {
 			<div class="button__wrapper">
 
 				<div class="button__column">
-					<a class="button__item">
-						<span> Проверка </span>
+					<a class="button__item" data-btn="request">
+						<span> Запрос к БД </span>
 					</a>
-					<a href="/"  class="button__item _state-clear">
+					<a href="/"  class="button__item _state-clear" data-btn="clear">
 						<span class="_state-clear"> Сброс стилей </span>
 					</a>
 				</div>
@@ -60,16 +60,11 @@ export class Header extends ExcelComponent {
 		event.preventDefault()
 		const $target = $(event.target)
 
-		if ($target.$el.classList.contains('_state-clear')) {
+		if ($target.data.btn === 'clear') {
 			this.$emit('Table:rerender')
 		}
-		// if ($target.data.type === 'exit') {
-		// 	ActiveRoute.navigate(' ')
-		// }		else if ($target.data.type === 'delete') {
-		// if (confirm('Вы действительно хотите удалить ')) {
-		// 	localStorage.removeItem('excel:' + ActiveRoute.param)
-		// 	ActiveRoute.navigate(' ')
-		// }
-		// }
+		if ($target.data.btn === 'request') {
+			this.$emit('Application:request')
+		}
 	}
 }

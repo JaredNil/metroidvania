@@ -40,7 +40,7 @@ export function resizeHandler(event, $root) {
 			document.onmouseup = e => {
 				if (event.target.dataset.resize == 'col') {
 					const cells = $root.findAll(`[data-col='${$parent.data.col}']`);
-					cells.forEach(e => e.style.width = changeValue + 'px')
+					// cells.forEach(e => e.style.width = changeValue + 'px')
 				} else {
 					$parent.$el.style.height = changeValue + 'px';
 				}

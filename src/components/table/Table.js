@@ -7,6 +7,8 @@ import { TableSelection } from './TableSelection';
 import * as actions from '@/redux/actions'
 import { defaultStyles, APPLY_STYLE } from './../../redux/types';
 import { parse } from './../../core/parse';
+import { createRequest } from "../../db/req";
+import { stuffingTable } from "./table.stuffing";
 
 
 
@@ -18,13 +20,13 @@ export class Table extends ExcelComponent {
 		super($root, {
 			name: 'Table',
 			listeners: ['mousedown', 'keydown', 'input'],
-			subscribe: ['colState', ''],
+			subscribe: ['colState', 'searchState', 'dataState'],
 			...options
 		})
 	}
 
 	toHTML() {
-		return createTable(10, this.store.getState())
+		return createTable(this.store.getState())
 	}
 
 	prepare() {
@@ -35,14 +37,6 @@ export class Table extends ExcelComponent {
 		super.init()
 		const $cell_start = this.$root.find('[data-id="0:0"]')
 		this.selection.select($cell_start)
-		this.$emit('Table:input', $cell_start)
-
-		// this.$on('Formula:input', value => {
-		// 	this.selection.$current
-		// 		.attr('data-value', value)
-		// 		.text(parse(value))
-		// 	this.updateTextInStore(value)
-		// })
 
 		this.$on('Formula:done', () => {
 			this.selection.$current.focus()
@@ -64,14 +58,29 @@ export class Table extends ExcelComponent {
 			this.$dispatch(actions.defaultClickState)
 		})
 
+		this.$on('Application:request', () => {
+			const res = createRequest(this.store.getState().searchState)
+			// здесь сделать сепаратор ответа по кол-ву ответов
+			this.$dispatch(actions.setResponse({ resArr: res }))
+
+		})
+
 	}
 
 	storeChanged(changes) {
 		console.log('Table: storeChanged()', changes)
 		// Обработка изменений - вместо render()
-		Array.from(this.$root.$el.getElementsByClassName('row')).forEach(row => {
-			Array.from(row.getElementsByClassName('row-data'))[0].style.gridTemplateColumns = getGridTemplateCol('', changes.colState)
-		});
+		if (changes.colState) {
+			Array.from(this.$root.$el.getElementsByClassName('row')).forEach(row => {
+				Array.from(row.getElementsByClassName('row-data'))[0].style.gridTemplateColumns = getGridTemplateCol('', changes.colState)
+			});
+		}
+		if (changes.dataState) {
+			const tableDOM = Array.from($(this.$root.$el).findAll('.row'))
+			tableDOM.shift(); tableDOM.shift();
+
+			stuffingTable(tableDOM, changes.dataState);
+		}
 
 	}
 
@@ -143,18 +152,21 @@ export class Table extends ExcelComponent {
 		}
 	}
 
-	updateTextInStore(value) {
-		this.$dispatch(actions.changeText({
-			id: this.selection.$current.id(),
-			value
-		}))
-	}
+	// updateTextInStore(value) {
+	// 	this.$dispatch(actions.changeText({
+	// 		id: this.selection.$current.id(),
+	// 		value
+	// 	}))
+	// }
 
+	updateSearchParam(text, id) {
+		this.$dispatch(actions.updateSearchParam({ text, id }))
+	}
 
 	onInput(event) {
-		this.$emit('Table:input', $(event.target))
-		this.updateTextInStore($(event.target).text())
+		this.updateSearchParam(event.target.value, event.target.dataset.col)
 	}
+
 }
 
 

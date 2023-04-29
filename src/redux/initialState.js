@@ -43,7 +43,7 @@ const defaultState = {
 		12: ``,
 		13: ``,
 	},
-	dataState: {},
+	dataState: [],
 	currentText: '',
 	currentStyle: defaultStyles,
 	stylesState: {},
