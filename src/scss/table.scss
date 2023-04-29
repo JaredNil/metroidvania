@@ -1,8 +1,11 @@
-.excel__table,
-.table__header {
+.excel__table {
+	* {
+		color: $color-1;
+	}
+
+	display: flex;
+	flex-direction: column;
 	width: 100%;
-	overflow-x: auto;
-	padding-bottom: 2px;
 
 	.row {
 		display: flex;
@@ -45,11 +48,12 @@
 		align-items: center;
 		background: #f8f9fa;
 		min-width: 40px;
+		width: 100%;
 		// width: $cell-width;
-		border: 1px solid $border-color;
+		// border: 1px solid $border-color;
 		height: 100%;
-		border-top: none;
-		border-left: none;
+		// border-top: none;
+		// border-left: none;
 	}
 	.search {
 		display: block;
@@ -65,6 +69,7 @@
 	}
 
 	.cell {
+		box-sizing: border-box;
 		min-width: 40px;
 		padding: 5px;
 		width: $cell-width;
@@ -72,13 +77,13 @@
 		border: 1px solid #e2e3e3;
 		border-top: none;
 		border-left: none;
+
 		color: #111;
 		white-space: nowrap;
+		overflow: auto;
 		outline: none;
 		&.selected {
-			border: none;
-			outline: 2px solid $bc-color-resize;
-			z-index: 2;
+			border: 2px solid $bc-color-resize;
 		}
 	}
 
@@ -115,111 +120,84 @@
 	}
 }
 
-// .excel__table,
-// .table__header {
-// 	width: 100%;
-// 	overflow-x: auto;
-// 	padding-bottom: 2px;
+.table__commonfinder {
+	position: relative;
+	width: 100%;
+	height: 60px;
 
-// 	.row {
-// 		display: flex;
-// 		flex-direction: row;
-// 		min-height: 20px;
-// 		height: $row-height;
-// 	}
-// 	.row-info {
-// 		position: relative;
-// 		display: flex;
-// 		justify-content: center;
-// 		align-items: center;
-// 		min-width: $info-cell-width;
-// 		height: 100%;
-// 		border: 1px solid $border-color;
-// 		background: #f8f9fa;
-// 		border-top: none;
+	.table__commonfinder-container {
+		position: relative;
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
 
-// 		&.search-info {
-// 			background: no-repeat center/60% url("./../assets/searchIcon.png");
-// 		}
-// 		.row-index {
-// 			user-select: none;
-// 			pointer-events: none;
-// 		}
-// 	}
-// 	.row-data {
-// 		display: flex;
-// 	}
-// 	.column {
-// 		position: relative;
-// 		display: flex;
-// 		justify-content: center;
-// 		align-items: center;
-// 		background: #f8f9fa;
-// 		min-width: 40px;
-// 		width: $cell-width;
-// 		border: 1px solid $border-color;
-// 		height: 100%;
-// 		border-top: none;
-// 		border-left: none;
-// 	}
-// 	.search {
-// 		display: block;
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		.input {
+			overflow: hidden;
+			background-color: rgba($color: #000000, $alpha: 0);
+			font-size: 32px;
+			line-height: 38px;
 
-// 		border: 2px solid $bc-color-resize;
-// 		border-radius: 9px;
-// 		overflow: hidden;
+			position: relative;
+			width: 89%;
+			left: 9%;
+			color: $color-1;
+			&::placeholder {
+				color: $color-1;
+				filter: opacity(55%);
+				letter-spacing: 2px;
+				font-weight: 200;
+			}
+			&:placeholder-shown {
+				border-left: solid 0.1px #000000;
+				animation: cursor 1.4s step-end infinite;
+				@keyframes cursor {
+					0% {
+						border-left: solid 0.1px #000000;
+					}
 
-// 		transition: all 0.2s ease 0s;
-// 		&:hover {
-// 			border: 2px solid $bc-color-resize;
-// 		}
-// 	}
+					50% {
+						border-left: solid 0.1px #00000000;
+					}
 
-// 	.cell {
-// 		min-width: 40px;
-// 		padding: 5px;
-// 		width: $cell-width;
-// 		height: 100%;
-// 		border: 1px solid #e2e3e3;
-// 		border-top: none;
-// 		border-left: none;
-// 		color: #111;
-// 		white-space: nowrap;
-// 		outline: none;
-// 		&.selected {
-// 			border: none;
-// 			outline: 2px solid $bc-color-resize;
-// 			z-index: 2;
-// 		}
-// 	}
+					100% {
+						border-left: solid 0.1px #000000;
+					}
+				}
+			}
+		}
+	}
+	&::after {
+		content: "";
+		position: absolute;
+		width: 100%;
+		height: 2px;
+		bottom: 0;
+		background-color: #c0c0c0;
+	}
+}
+.title__commonfinder-container.input:focus .title__commonfinder-container:after {
+	width: 23.7px;
+	opacity: 0;
+}
 
-// 	.col-resize {
-// 		position: absolute;
-// 		top: 0;
-// 		bottom: 0;
-// 		right: 0;
-// 		width: 4px;
-// 		background: $bc-color-resize;
-// 		opacity: 0;
-// 		z-index: 1000;
-// 		&:hover {
-// 			opacity: 1 !important;
-// 			cursor: col-resize;
-// 		}
-// 	}
-
-// 	.row-resize {
-// 		position: absolute;
-// 		left: 0;
-// 		right: 0;
-// 		bottom: 0;
-// 		z-index: 1000;
-// 		height: 4px;
-// 		background: #3c74ff;
-// 		opacity: 0;
-// 		&:hover {
-// 			opacity: 1 !important;
-// 			cursor: row-resize;
-// 		}
-// 	}
-// }
+.excel__table {
+	.row:nth-child(2) {
+		height: 150px;
+		.row-info .row-index {
+			opacity: 0;
+		}
+		.row-data {
+			.column {
+				span {
+					font-size: 11px;
+					line-height: 11px;
+					text-align: center;
+					transform: rotate(-78deg);
+				}
+			}
+		}
+	}
+}

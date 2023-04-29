@@ -5,7 +5,6 @@ import { rootReducer } from './../redux/rootReducer';
 import { normalizeInitialState } from './../redux/initialState';
 
 import { Header } from './../components/header/Header';
-import { Title } from './../components/title/Title';
 import { Table } from './../components/table/Table';
 
 
@@ -24,7 +23,7 @@ export class Page {
 
 
 			this.excel = new Excel({
-				components: [Header, Title, Table],
+				components: [Header, Table],
 				store
 			})
 
