@@ -126,7 +126,6 @@ function toCell(state, row) {
 
 	return function (_, col) {
 		const id = `${row}:${col}`
-		const valueCell = state
 
 		return `
 		<div 
@@ -135,7 +134,7 @@ function toCell(state, row) {
 			data-col="${col}" 
 			data-id="${row}:${col}"
 		>
-			${state.dataState[row][col]}
+		${(state.dataState.length) ? state.dataState[row][col] : 'no'}
 		</div>
 		`
 	}
@@ -200,6 +199,7 @@ export function createTable(state) {
 
 
 	for (let row = 0; row < rowsCount(); row++) {
+
 		const cells = new Array(colsNaming.length)
 			.fill('')
 			.map(toCell(state, row))
