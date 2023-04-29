@@ -9,11 +9,11 @@ const defaultState = {
 		search: 36,
 	},
 	colState: {
-		0: 20, // Number fixed
+		0: `25px`, // Number fixed
 		1: `1fr`,
 		2: `1fr`,
 		3: `1fr`,
-		4: 20, // Checkbox fixed
+		4: `25px`, // Checkbox fixed
 		5: `1fr`,
 		6: `1fr`,
 		7: `1fr`,
@@ -24,6 +24,24 @@ const defaultState = {
 		11: `1fr`,
 		12: `1fr`,
 		13: `1fr`,
+	},
+	searchState: {
+		common: '',
+		0: ``,
+		1: ``,
+		2: ``,
+		3: ``,
+		4: ``,
+		5: ``,
+		6: ``,
+		7: ``,
+		8: ``,
+		9: ``,
+		10: ``,
+		11: ``,
+		11: ``,
+		12: ``,
+		13: ``,
 	},
 	dataState: {},
 	currentText: '',

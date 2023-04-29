@@ -13,7 +13,7 @@ export function resizeHandler(event, $root) {
 		const sideProp = event.target.dataset.resize === 'col' ? 'bottom' : 'right'
 		$resizer.css({
 			opacity: 1,
-			[sideProp]: '-5000px'
+			[sideProp]: '-5000px',
 		})
 
 

@@ -9,4 +9,4 @@ let page = new Page()
 $('#app').append(page.getRoot())
 page.afterRender()
 
-console.log(page.excel);
+console.log(page);

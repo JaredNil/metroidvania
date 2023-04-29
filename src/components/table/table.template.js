@@ -26,14 +26,24 @@ function getHeight(rowState = {}, index) {
 	return (rowState[index] || DEFAULT_HEIGHT) + 'px'
 }
 
+export function getGridTemplateCol(index, colState) {
+	let gTC = ``
+
+	for (var key in colState) {
+		gTC += `${colState[key]} `
+	}
+
+	return gTC
+}
+
 function toColumn({ col, index, width }) {
 
+	// style="width:${width}" ВЫДЕЛИЛИ В STATE для grid
 	return `
 	<div 
 		class="column" 
 		data-type="resizable" 
 		data-col="${index}" 
-		style="width:${width}"
 	>
 		<span>${col}</span>
 		
@@ -56,9 +66,7 @@ function toSearchColumn({ _, index, width }) {
 }
 
 
-function toRow(index, content, rowState) {
-
-
+function toRow(index, content, { rowState, colState }) {
 	const resize = (index)
 		? `<div class="row-resize" data-resize="row"></div>`
 		: ``
@@ -67,17 +75,25 @@ function toRow(index, content, rowState) {
 			<div
 				class="row" data-type="resizable"
 				data-row="${(index) ? index : '0'}"
-				style="height:${getHeight(rowState, index)}">
+				style="height:${getHeight(rowState, index)} "
+			>
+
 				<div class="row-info">
 					<span class="row-index">${index}</span>
 					${resize}
 				</div>
-				<div class="row-data">${content}</div>
+
+				<div class="row-data"
+					style="grid-template-columns:${getGridTemplateCol(index, colState)}"
+				>
+					${content}
+				</div>
+
 			</div>
 		`
 }
 
-export function toRowSearch(index, content, rowState) {
+export function toRowSearch(index, content, { rowState, colState }) {
 
 	return `
 		<div  
@@ -87,7 +103,11 @@ export function toRowSearch(index, content, rowState) {
 			<div class="row-info search-info">
 				<span class="row-index"></span>
 			</div>
-			<div class="row-data">${content}</div>
+			<div class="row-data"
+			style="grid-template-columns:${getGridTemplateCol(index, colState)}"
+			>
+				${content}
+			</div>
 		</div>`
 }
 
@@ -107,7 +127,7 @@ function toCell(state, row) {
 			data-value="${data || ''}"
 			data-col="${col}" 
 			data-id="${row}:${col}"
-			style="${styles};width: ${getWidth(state.colState, col)}"
+			style="${styles};"
 		>
 		${parse(data) || ''}
 		</div>
@@ -153,7 +173,7 @@ export function createTable(rowsCount = 15, state = {}) {
 		.map(withWidthFrom(state))
 		.map(toColumn)
 		.join(``)
-	rows.push(toRow('0', colsTitle, state.rowState))
+	rows.push(toRow('0', colsTitle, state))
 
 	// Create secord row with search
 	const colsSearch = new Array(colsNaming.length)
@@ -163,7 +183,7 @@ export function createTable(rowsCount = 15, state = {}) {
 		.map(toSearchColumn)
 		.join(``)
 
-	rows.push(toRowSearch('search', colsSearch, state.rowState))
+	rows.push(toRowSearch('search', colsSearch, state))
 
 
 	for (let row = 0; row < rowsCount; row++) {
@@ -172,7 +192,7 @@ export function createTable(rowsCount = 15, state = {}) {
 			.map(toCell(state, row))
 			.join('')
 
-		rows.push(toRow(row + 1, cells, state.rowState));
+		rows.push(toRow(row + 1, cells, state));
 	}
 
 	return finderCommonHTML + rows.join('')

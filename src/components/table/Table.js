@@ -1,5 +1,5 @@
 import { ExcelComponent } from "../../core/ExcelComponent";
-import { createTable } from './table.template';
+import { createTable, getGridTemplateCol } from './table.template';
 import { $ } from "../../core/dom";
 import { range } from "../../core/utils";
 import { resizeHandler } from './table.resize';
@@ -18,7 +18,7 @@ export class Table extends ExcelComponent {
 		super($root, {
 			name: 'Table',
 			listeners: ['mousedown', 'keydown', 'input'],
-			subscribe: ['colState'],
+			subscribe: ['colState', ''],
 			...options
 		})
 	}
@@ -37,12 +37,12 @@ export class Table extends ExcelComponent {
 		this.selection.select($cell_start)
 		this.$emit('Table:input', $cell_start)
 
-		this.$on('Formula:input', value => {
-			this.selection.$current
-				.attr('data-value', value)
-				.text(parse(value))
-			this.updateTextInStore(value)
-		})
+		// this.$on('Formula:input', value => {
+		// 	this.selection.$current
+		// 		.attr('data-value', value)
+		// 		.text(parse(value))
+		// 	this.updateTextInStore(value)
+		// })
 
 		this.$on('Formula:done', () => {
 			this.selection.$current.focus()
@@ -68,7 +68,11 @@ export class Table extends ExcelComponent {
 
 	storeChanged(changes) {
 		console.log('Table: storeChanged()', changes)
-		this.toHTML()
+		// Обработка изменений - вместо render()
+		Array.from(this.$root.$el.getElementsByClassName('row')).forEach(row => {
+			Array.from(row.getElementsByClassName('row-data'))[0].style.gridTemplateColumns = getGridTemplateCol('', changes.colState)
+		});
+
 	}
 
 	selectCell($cell) {
@@ -79,7 +83,7 @@ export class Table extends ExcelComponent {
 		this.$dispatch(actions.changeStyles(styles))
 	}
 
-	// block под удаление
+
 	async resizeTable(event) {
 		try {
 			const data = await resizeHandler(event, this.$root)
@@ -89,6 +93,7 @@ export class Table extends ExcelComponent {
 			console.log(error);
 		}
 	}
+
 	onMousedown(event) {
 		if (event.target.dataset.resize) {
 			this.resizeTable(event)
