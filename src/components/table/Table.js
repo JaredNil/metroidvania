@@ -14,15 +14,16 @@ import { stuffingTable } from "./table.stuffing";
 
 
 export class Table extends ExcelComponent {
-	static className = ['excel__table', 'container'];
 
 	constructor($root, options) {
 		super($root, {
 			name: 'Table',
+			className: 'excel__table',
 			listeners: ['mousedown', 'keydown', 'input'],
 			subscribe: ['colState', 'searchState', 'dataState'],
 			...options
 		})
+
 	}
 
 	toHTML() {
@@ -38,23 +39,11 @@ export class Table extends ExcelComponent {
 		const $cell_start = this.$root.find('[data-id="0:0"]')
 		this.selection.select($cell_start)
 
-		this.$on('Formula:done', () => {
-			this.selection.$current.focus()
-		})
-
 		this.$on('Table:rerender', () => {
 			this.$dispatch(actions.defaultClickState())
 		})
 
-		this.$on('Toolbar:applyStyle', value => {
-			this.selection.applyStyle(value)
-			this.$dispatch(actions.applyStyle({
-				value,
-				ids: this.selection.selectedIds
-			}))
-		})
-
-		this.$on('Header:click', value => {
+		this.$on('Header:click', () => {
 			this.$dispatch(actions.defaultClickState)
 		})
 
@@ -62,9 +51,20 @@ export class Table extends ExcelComponent {
 			const res = createRequest(this.store.getState().searchState)
 			// здесь сделать сепаратор ответа по кол-ву ответов
 			this.$dispatch(actions.setResponse({ resArr: res }))
-
+			this.page.excel.getRoot()
 		})
 
+		// this.$on('Formula:done', () => {
+		// 	this.selection.$current.focus()
+		// })
+
+		// this.$on('Toolbar:applyStyle', value => {
+		// 	this.selection.applyStyle(value)
+		// 	this.$dispatch(actions.applyStyle({
+		// 		value,
+		// 		ids: this.selection.selectedIds
+		// 	}))
+		// })
 	}
 
 	storeChanged(changes) {
@@ -89,7 +89,7 @@ export class Table extends ExcelComponent {
 		this.$emit('Table:select', $cell)
 
 		const styles = $cell.getStyles(Object.keys(defaultStyles))
-		this.$dispatch(actions.changeStyles(styles))
+		// this.$dispatch(actions.changeStyles(styles))
 	}
 
 

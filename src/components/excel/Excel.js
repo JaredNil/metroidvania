@@ -10,27 +10,45 @@ export class Excel {
 		this.emitter = new Emitter()
 		// Common object of Observer to handle from components
 		this.subscriber = new StoreSubscriber(this.store)
-	}
+		this.page = options.page
 
-	getRoot() {
-		const $rootContainer = $.create('div', ['excel__wrapper'])
-		const $root = $.create('div', ['excel'])
-
-		const componentOptions = {
+		this.componentOptions = {
 			emitter: this.emitter,
-			store: this.store
+			store: this.store,
+			page: this.page
 		}
 
+		this.$rootContainer = $.create('div', ['excel__wrapper'])
+		this.$root = $.create('div', ['excel'])
+	}
+
+
+	getRoot() {
+		this.$root.clear()
+		this.$rootContainer.clear()
+
+		console.log('Excel: getRoot()');
+
+
 		this.components = this.components.map(Component => {
-			let $el = $.create('div', Component.className)
-			let component = new Component($el, componentOptions)
+
+			let $el = $.create('div')
+
+			let component = (!Component.$root)
+				? component = new Component($el, this.componentOptions)
+				: component = Component
+
+			$el.addClass(component.className)
+			$el.addClass(`container`)
 			$el.html(component.toHTML())
 
-			$rootContainer.append($el);
+			this.$rootContainer.append($el);
 			return component;
 		});
-		return $root.append($rootContainer)
+
+		return this.$root.append(this.$rootContainer)
 	}
+
 
 	init() {
 		this.store.dispatch(updateDate())
@@ -38,6 +56,7 @@ export class Excel {
 
 		this.components.forEach(component => component.init());
 	}
+
 
 	destroy() {
 		this.subscriber.unsubscribeComponents()

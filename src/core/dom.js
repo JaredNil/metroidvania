@@ -44,6 +44,12 @@ class Dom {
 		this.$el.removeEventListener(eventType, callback)
 	}
 
+	clear() {
+		this.$el.innerHTML = ``
+		return this
+	}
+
+
 	append(node) {
 		if (node instanceof Dom) {
 			node = node.$el

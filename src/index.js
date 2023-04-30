@@ -8,5 +8,3 @@ import { Page } from '@core/Page';
 let page = new Page()
 $('#app').append(page.getRoot())
 page.afterRender()
-
-console.log(page);

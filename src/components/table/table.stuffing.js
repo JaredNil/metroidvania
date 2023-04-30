@@ -4,7 +4,7 @@ export function stuffingTable(tableDOM, dataState) {
 
 	tempFirstLine.map((rowDOM, rowCount) => {
 
-		console.log(rowDOM);
+		// console.log(rowDOM);
 		rowDOM = rowDOM.getElementsByClassName('row-data')[0]
 
 		for (let sss of rowDOM.childNodes) {

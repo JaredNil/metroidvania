@@ -11,6 +11,7 @@ import { Table } from './../components/table/Table';
 
 export class Page {
 	constructor(params) {
+		this.page = this
 		this.params = params
 	}
 	getRoot() {
@@ -24,6 +25,7 @@ export class Page {
 
 			this.excel = new Excel({
 				components: [Header, Table],
+				page: this.page,
 				store
 			})
 

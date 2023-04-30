@@ -9,11 +9,12 @@ import { ActiveRoute } from './../../core/router/Router';
 
 export class Header extends ExcelComponent {
 
-	static className = ['excel__header', 'container'];
-
+	// 		className: ['excel__header', 'container'],
 	constructor($root, options) {
+
 		super($root, {
 			name: 'Header',
+			className: 'excel__header',
 			listeners: ['input', 'click'],
 			...options
 		})

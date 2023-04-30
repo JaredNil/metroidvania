@@ -61,18 +61,107 @@ function toColumn({ col, index, width }) {
 	</div>`
 }
 
-// 
-
 function toSearchColumn(index, searchState) {
 
+	let searchNode = ``
 
-	return `
-	<input 
-			class="search column"
-			data-col="${index}" 
-			value="${getSearchParamFromState(index, searchState)}"
-	/>
-	`
+	switch (index) {
+		case 1:
+			searchNode = `
+				<select
+						class="search column"
+						data-col="${index}" 
+						value="${getSearchParamFromState(index, searchState)}"
+				>
+					<option value=""></option>
+					<option value="6">6</option>
+					<option value="!">!</option>
+					<option value="R">R</option>
+				</select>
+			`
+			break;
+
+		case 2:
+			searchNode = `
+					<select
+							class="search column"
+							data-col="${index}" 
+							value="${getSearchParamFromState(index, searchState)}"
+					>
+						<option value=""></option>
+						<option value="218">218</option>
+						<option value="202">202</option>
+						<option value="2..">2...</option>
+					</select>
+				`
+			break;
+
+		case 9:
+			searchNode = `
+						<select
+								class="search column"
+								data-col="${index}" 
+								value="${getSearchParamFromState(index, searchState)}"
+						>
+							<option value=""></option>
+							<option value="218">218</option>
+							<option value="202">202</option>
+							<option value="2..">2...</option>
+						</select>
+					`
+			break;
+
+		case 10:
+			searchNode = `
+							<select
+									class="search column"
+									data-col="${index}" 
+									value="${getSearchParamFromState(index, searchState)}"
+							>
+								<option value=""></option>
+								<option value="ЛУИ-ПЛТ">ЛУИ-ПЛТ</option>
+								<option value="ЛМИ">ЛМИ</option>
+								<option value="МОСНК">МОСНК</option>
+								<option value="РиД">РиД</option>
+							</select>
+						`
+			break;
+
+		case 12:
+			searchNode = `
+				<input
+					type="date"
+					class="search column"
+					data-col="${index}" 
+					value="${getSearchParamFromState(index, searchState)}"
+				/>
+			`
+			break;
+
+		case 13:
+			searchNode = `
+					<input
+						type="date"
+						class="search column"
+						data-col="${index}" 
+						value="${getSearchParamFromState(index, searchState)}"
+					/>
+				`
+			break;
+
+
+		default:
+			searchNode = `
+				<input 
+						class="search column"
+						data-col="${index}" 
+						value="${getSearchParamFromState(index, searchState)}"
+				/>
+			`
+			break;
+	}
+
+	return searchNode
 }
 
 
@@ -127,6 +216,32 @@ function toCell(state, row) {
 	return function (_, col) {
 		const id = `${row}:${col}`
 
+		function getCellValue() {
+			if (state.dataState.length) {
+				let value
+
+				switch (col) {
+					case 4:
+						const checked = (typeof state.dataState[row][col] == 'boolean')
+							? `<input
+									type="checkbox"
+									${(state.dataState[row][col]) ? 'checked' : ''} 
+								>`
+							: 'ERROR'
+
+						value = checked
+						break;
+
+					default:
+						value = (state.dataState[row][col]) ? state.dataState[row][col] : ''
+						break;
+				}
+
+
+				return value
+			}
+		}
+
 		return `
 		<div 
 			class="cell" 
@@ -134,7 +249,9 @@ function toCell(state, row) {
 			data-col="${col}" 
 			data-id="${row}:${col}"
 		>
-		${(state.dataState.length) ? state.dataState[row][col] : 'no'}
+			<span>
+				${getCellValue()}
+			</span>
 		</div>
 		`
 	}
