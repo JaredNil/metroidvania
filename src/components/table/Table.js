@@ -35,7 +35,9 @@ export class Table extends ExcelComponent {
 	}
 
 	init() {
+
 		super.init()
+
 		const $cell_start = this.$root.find('[data-id="0:0"]')
 		this.selection.select($cell_start)
 
@@ -45,14 +47,20 @@ export class Table extends ExcelComponent {
 
 		this.$on('Header:click', () => {
 			this.$dispatch(actions.defaultClickState)
+
+			this.page.excel.renderTable()
 		})
 
 		this.$on('Application:request', () => {
 			const res = createRequest(this.store.getState().searchState)
 			// здесь сделать сепаратор ответа по кол-ву ответов
 			this.$dispatch(actions.setResponse({ resArr: res }))
-			this.page.excel.getRoot()
+
+			this.page.excel.renderTable()
 		})
+
+
+
 
 		// this.$on('Formula:done', () => {
 		// 	this.selection.$current.focus()
@@ -65,11 +73,12 @@ export class Table extends ExcelComponent {
 		// 		ids: this.selection.selectedIds
 		// 	}))
 		// })
+		console.log(this);
 	}
 
 	storeChanged(changes) {
 		console.log('Table: storeChanged()', changes)
-		// Обработка изменений - вместо render()
+
 		if (changes.colState) {
 			Array.from(this.$root.$el.getElementsByClassName('row')).forEach(row => {
 				Array.from(row.getElementsByClassName('row-data'))[0].style.gridTemplateColumns = getGridTemplateCol('', changes.colState)
@@ -81,7 +90,6 @@ export class Table extends ExcelComponent {
 
 			stuffingTable(tableDOM, changes.dataState);
 		}
-
 	}
 
 	selectCell($cell) {
@@ -164,6 +172,7 @@ export class Table extends ExcelComponent {
 	}
 
 	onInput(event) {
+		console.log('Table:onInput');
 		this.updateSearchParam(event.target.value, event.target.dataset.col)
 	}
 

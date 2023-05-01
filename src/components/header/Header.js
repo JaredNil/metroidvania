@@ -59,6 +59,7 @@ export class Header extends ExcelComponent {
 
 	onClick(event) {
 		event.preventDefault()
+		console.log('Header:onClick');
 		const $target = $(event.target)
 
 		if ($target.data.btn === 'clear') {

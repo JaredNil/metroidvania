@@ -18,35 +18,61 @@ export class Excel {
 			page: this.page
 		}
 
-		this.$rootContainer = $.create('div', ['excel__wrapper'])
-		this.$root = $.create('div', ['excel'])
+		this.$rootContainer = (this.$root)
+			? this.$rootContainer
+			: $.create('div', ['excel__wrapper'])
+
+		this.$root = (this.$root)
+			? this.$root
+			: $.create('div', ['excel'])
 	}
 
 
 	getRoot() {
-		this.$root.clear()
-		this.$rootContainer.clear()
+
+		// this.$rootContainer.clear()
 
 		console.log('Excel: getRoot()');
 
 
 		this.components = this.components.map(Component => {
-
 			let $el = $.create('div')
-
-			let component = (!Component.$root)
-				? component = new Component($el, this.componentOptions)
-				: component = Component
+			// let component = (!Component.$root)
+			// 	? component = new Component($el, this.componentOptions)
+			// 	: component = Component
+			let component = new Component($el, this.componentOptions)
 
 			$el.addClass(component.className)
 			$el.addClass(`container`)
 			$el.html(component.toHTML())
 
 			this.$rootContainer.append($el);
+
 			return component;
 		});
 
 		return this.$root.append(this.$rootContainer)
+	}
+
+	renderTable() {
+		console.log('Excel: renderTable()');
+
+		let TableComponent = this.components[1]
+		console.log(TableComponent);
+		TableComponent.unsubscribeComponents
+		this.destroy()
+
+		let headerDOM = this.$rootContainer.$el.getElementsByClassName('excel__table')[0]
+		if (headerDOM) headerDOM.remove()
+		let newTableDOM = this.components[1].toHTML()
+
+		let $el = $.create('div')
+		$el.addClass('excel__table')
+		$el.addClass(`container`)
+		$el.html(newTableDOM)
+
+		this.$rootContainer.append($el)
+		this.init()
 	}
 
 
